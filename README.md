@@ -1,2 +1,2 @@
-# navitron
+# Navitron 🛻
 simply deployable
