@@ -74,6 +74,31 @@ func main() {
 	stopService(config.Service)
 
 	// build go binaries
+	buildBins := config.Build.Build
+	for _, buildBin := range buildBins {
+		fmt.Println("Running build for:", buildBin)
+		build(buildBin)
+	}
+
+	// clean app_dir
+	cleanAppDir(config.Paths.App)
+
+	// ensure app directory
+	ensureAppDir(config.Paths.App)
+
+	// copy files
+	bins := config.Include.Bin
+	for _, bin := range bins {
+		dst := config.Paths.App
+		copyFile(bin, dst)
+	}
+
+	// copy folders
+	folders := config.Include.Folders
+	for _, folder := range folders {
+		dst := config.Paths.App
+		copyFolder(folder, dst)
+	}
 
 	// stop systemd service file
 	startService(config.Service)
